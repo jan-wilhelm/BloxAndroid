@@ -13,9 +13,15 @@ public abstract class State {
     protected Vector3 mouse;
     protected GameStateManager gameStateManager;
     protected ColorManager colorManager;
+
+    // Offset along the y-axis.
+    // This could be used for the "sliding" animation
+    // which is already implemented in the iOS version
+    // of Blox.
     protected float yOffsetForView = 0F;
 
     protected State(GameStateManager gameStateManager, ColorManager colorManager) {
+        // Set or initialize the attributes
         this.gameStateManager = gameStateManager;
         this.colorManager = colorManager;
         this.cam = new OrthographicCamera();
