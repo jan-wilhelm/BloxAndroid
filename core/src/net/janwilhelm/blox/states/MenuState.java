@@ -17,7 +17,7 @@ public class MenuState extends State {
         super(blox);
         font = new BitmapFont(Gdx.files.internal("data/arial-black-120.fnt"), false);
         font.setColor(1,1,1,0.8f);
-        layout = new GlyphLayout(font, "Hello World!");
+        layout = new GlyphLayout(font, "Hello World");
     }
 
     @Override
