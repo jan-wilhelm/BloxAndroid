@@ -12,7 +12,7 @@ public class MenuState extends State {
 
     public MenuState(Blox blox) {
         super(blox);
-        this.helloWorldFont = new Font("data/arial-black-120.fnt", "Hello World", false);
+        this.helloWorldFont = new Font("data/arial-black-120.fnt", "Test Text", false);
         this.helloWorldFont.setColor(1,1,1,0.8f);
     }
 

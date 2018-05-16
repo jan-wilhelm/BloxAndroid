@@ -6,11 +6,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import net.janwilhelm.blox.colors.ColorManager;
+import net.janwilhelm.blox.states.GameState;
 import net.janwilhelm.blox.states.GameStateManager;
 import net.janwilhelm.blox.states.MenuState;
 
@@ -37,7 +39,7 @@ public class Blox extends ApplicationAdapter {
 
 		batch = new SpriteBatch();
 		Gdx.gl.glClearColor(0, 0, 0, 1);
-		gameStateManager.push(new MenuState(this));
+		gameStateManager.push(new GameState(this));
 	}
 
 	@Override
@@ -67,5 +69,32 @@ public class Blox extends ApplicationAdapter {
 		shapeRenderer.setColor(this.getColorManager().getActiveColor().getGdxColor());
 		shapeRenderer.rect(0,0, this.screenWidth, this.screenHeight);
 		shapeRenderer.end();
+	}
+
+	public static Texture createRoundedRectangle(int width, int height, int cornerRadius, Color color) {
+		Texture retTexture;
+		Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
+		Pixmap ret = new Pixmap(width, height, Pixmap.Format.RGBA8888);
+
+		pixmap.setColor(color);
+
+		pixmap.fillCircle(cornerRadius, height - cornerRadius - 1, cornerRadius);
+		pixmap.fillCircle(width - cornerRadius - 1, height - cornerRadius - 1, cornerRadius);
+
+		pixmap.fillRectangle(0,0,cornerRadius,cornerRadius);
+		pixmap.fillRectangle(width - cornerRadius,0,cornerRadius,cornerRadius);
+		pixmap.fillRectangle(cornerRadius, 0, width - cornerRadius * 2, height);
+		pixmap.fillRectangle(0, cornerRadius, width, height - cornerRadius * 2);
+
+		ret.setColor(color);
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				if (pixmap.getPixel(x, y) != 0) ret.drawPixel(x, y);
+			}
+		}
+		retTexture = new Texture(pixmap);
+		pixmap.dispose();
+
+		return retTexture;
 	}
 }
