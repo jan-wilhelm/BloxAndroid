@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import net.janwilhelm.blox.colors.ColorManager;
+import net.janwilhelm.blox.sprites.Corner;
 import net.janwilhelm.blox.states.GameState;
 import net.janwilhelm.blox.states.GameStateManager;
 import net.janwilhelm.blox.states.MenuState;
@@ -71,18 +72,70 @@ public class Blox extends ApplicationAdapter {
 		shapeRenderer.end();
 	}
 
-	public static Texture createRoundedRectangle(int width, int height, int cornerRadius, Color color) {
+	public static boolean contains(Object[] array, Object obj) {
+		for (int i = 0; i < array.length; i++) {
+			if (array[i] == obj || array[i].equals(obj)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static Corner[] getInverseCorners(Corner[] corners) {
+		Corner[] inverseCorners = new Corner[4 - corners.length];
+		int i = 0;
+		for(Corner corner : Corner.values()) {
+			if (!contains(corners, corner)) {
+				inverseCorners[i] = corner;
+				i++;
+			}
+		}
+		return inverseCorners;
+	}
+
+	public static Texture createRoundedRectangle(Corner[] corners, int width, int height, int cornerRadius, Color color) {
 		Texture retTexture;
 		Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
 		Pixmap ret = new Pixmap(width, height, Pixmap.Format.RGBA8888);
 
 		pixmap.setColor(color);
 
-		pixmap.fillCircle(cornerRadius, height - cornerRadius - 1, cornerRadius);
-		pixmap.fillCircle(width - cornerRadius - 1, height - cornerRadius - 1, cornerRadius);
+		Corner[] inverseCorners = getInverseCorners(corners);
 
-		pixmap.fillRectangle(0,0,cornerRadius,cornerRadius);
-		pixmap.fillRectangle(width - cornerRadius,0,cornerRadius,cornerRadius);
+		for (Corner corner: corners) {
+			switch (corner) {
+				case TOP_LEFT:
+					pixmap.fillCircle(cornerRadius, cornerRadius, cornerRadius);
+					break;
+				case TOP_RIGHT:
+					pixmap.fillCircle(width - cornerRadius - 1, cornerRadius, cornerRadius);
+					break;
+				case BOTTOM_LEFT:
+					pixmap.fillCircle(cornerRadius, height - cornerRadius - 1, cornerRadius);
+					break;
+				case BOTTOM_RIGHT:
+					pixmap.fillCircle(width - cornerRadius - 1, height - cornerRadius - 1, cornerRadius);
+					break;
+			}
+		}
+
+		for (Corner corner: inverseCorners) {
+			switch (corner) {
+				case TOP_LEFT:
+					pixmap.fillRectangle(0,0,cornerRadius,cornerRadius);
+					break;
+				case TOP_RIGHT:
+					pixmap.fillRectangle(width - cornerRadius,0,cornerRadius,cornerRadius);
+					break;
+				case BOTTOM_LEFT:
+					pixmap.fillRectangle(0,height - cornerRadius, cornerRadius,cornerRadius);
+					break;
+				case BOTTOM_RIGHT:
+					pixmap.fillRectangle(width - cornerRadius,height - cornerRadius, cornerRadius,cornerRadius);
+					break;
+			}
+		}
+
 		pixmap.fillRectangle(cornerRadius, 0, width - cornerRadius * 2, height);
 		pixmap.fillRectangle(0, cornerRadius, width, height - cornerRadius * 2);
 
@@ -96,5 +149,10 @@ public class Blox extends ApplicationAdapter {
 		pixmap.dispose();
 
 		return retTexture;
+	}
+
+	public static Texture createRoundedRectangle(int width, int height, int cornerRadius, Color color) {
+		Corner[] allCorners = Corner.values();
+		return createRoundedRectangle(allCorners, width, height, cornerRadius, color);
 	}
 }

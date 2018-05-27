@@ -3,6 +3,7 @@ package net.janwilhelm.blox.colors;
 import com.badlogic.gdx.graphics.Color;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -68,6 +69,16 @@ public class ColorManager {
 
     public static Color getColorFromRGB(float red, float green, float blue, float alpha) {
         return new Color(red, green, blue, alpha);
+    }
+
+    public ArrayList<GameColor> getColors() {
+        return colors;
+    }
+
+    public ArrayList<GameColor> getShuffledColors() {
+        ArrayList<GameColor> colorsCopy = (ArrayList<GameColor>) colors.clone();
+        Collections.shuffle(colorsCopy);
+        return colorsCopy;
     }
 
 }
