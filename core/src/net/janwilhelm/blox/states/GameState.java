@@ -17,7 +17,8 @@ public class GameState extends State {
 
     private Font scoreFont;
     private Sprite rectangle;
-    private Sprite[] tiles;
+    private Sprite[] tiles = new Sprite[4];
+    private Sprite whiteBackgroundTile;
 
     public GameState(Blox blox) {
         super(blox);
@@ -31,7 +32,7 @@ public class GameState extends State {
 
         final Color activeColor = blox.getColorManager().getActiveColor().getGdxColor();
         this.scoreFont.setColor(activeColor.r, activeColor.g, activeColor.b, activeColor.a);
-        this.rectangle = new Sprite(Blox.createRoundedRectangle(Corner.bottom(), blox.screenWidth, 100, 20, WHITE));
+        this.rectangle = new Sprite(Blox.createRoundedRectangle(Corner.bottom(), blox.screenWidth, 125, 30, WHITE));
 
         this.rectangle.setAlpha(0.8f);
         this.rectangle.setPosition(0, this.blox.screenHeight - rectangle.getHeight());
@@ -40,29 +41,46 @@ public class GameState extends State {
     private void createRectangles() {
         int index = 0;
         for(GameColor color : blox.getColorManager().getShuffledColors()) {
-            /*for color in (self.playGameDelegate?.getColorManager().getShuffledColors())! {
-                    let rect = CGRect(x: (index % 2 == 0 ? (-200) : (0)), y: (index < 2 ? (-200) : (0)), width: 200, height: 200)
-            let path = UIBezierPath(roundedRect: rect, byRoundingCorners: [corners[index]], cornerRadii: CGSize(width: 50, height: 50)).cgPath
 
-            let sprite = SKShapeNode(path: path)
-            sprite.fillColor = color.uiColor
+            final Texture rect = Blox.createRoundedRectangle(new Corner[] {Corner.values()[index]}, 200, 200, 50, WHITE);
+            final Sprite tile = new Sprite(rect);
 
-            self.addChild(sprite)
+            tile.setPosition( this.blox.screenWidth / 2 + ((index % 2 == 0) ? (-200f) : (0f)),  this.blox.screenHeight / 2 + ((index < 2 ? (-200f) : (0f))));
+            tile.setColor(color.getGdxColor());
 
-            tiles.append(sprite)
-            index += 1*/
+            this.tiles[index] = tile;
 
-            // SWIFT Code that needs to be implemented. TODO
+            index ++;
         }
 
+        this.createWhiteBackgroundTile();
+    }
+
+    private void createWhiteBackgroundTile() {
+        whiteBackgroundTile = new Sprite(Blox.createRoundedRectangle(Corner.values(), 440, 440, 50, WHITE));
+
+        whiteBackgroundTile.setAlpha(0.8f);
+        whiteBackgroundTile.setPosition(blox.screenWidth / 2 - 220, blox.screenHeight / 2 - 220);
     }
 
     @Override
     public void render(SpriteBatch batch, ShapeRenderer shapeRenderer) {
         this.blox.renderBackground();
         batch.begin();
-        rectangle.draw(batch);
-        scoreFont.render(batch, this.blox.screenWidth / 2, this.blox.screenHeight - 10);
+
+        rectangle.draw(batch); // draw the upper bar for the score etc.
+
+        this.whiteBackgroundTile.draw(batch);
+
+        // render the 4 tiles
+        for (int i = 0; i < tiles.length; i++) {
+            if (this.tiles[i] == null) {
+                continue;
+            }
+            this.tiles[i].draw(batch);
+        }
+
+        scoreFont.render(batch, this.blox.screenWidth / 2, this.blox.screenHeight - 20);
         batch.end();
     }
 

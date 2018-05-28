@@ -1,10 +1,11 @@
 package net.janwilhelm.blox.sprites;
 
 public enum Corner {
-    TOP_LEFT,
-    TOP_RIGHT,
+
     BOTTOM_LEFT,
-    BOTTOM_RIGHT;
+    BOTTOM_RIGHT,
+    TOP_LEFT,
+    TOP_RIGHT;
 
     public static Corner[] top() {
         return new Corner[] {
