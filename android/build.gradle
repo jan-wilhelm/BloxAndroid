@@ -17,7 +17,7 @@ android {
     }
     defaultConfig {
         applicationId "net.janwilhelm.blox"
-        minSdkVersion 9
+        minSdkVersion 14
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -30,6 +30,11 @@ android {
     }
 }
 
+dependencies {
+    implementation 'com.google.firebase:firebase-core:16.0.0'
+}
+
+apply plugin: 'com.google.gms.google-services'
 
 // called every time gradle gets executed, takes the native dependencies of
 // the natives configuration, and extracts them to the proper libs/ folders
@@ -133,3 +138,4 @@ idea {
         }
     }
 }
+
