@@ -27,6 +27,11 @@ public class MenuState extends State {
     }
 
     @Override
+    public void wasShown() {
+
+    }
+
+    @Override
     public void render(SpriteBatch batch, ShapeRenderer shapeRenderer) {
         // Test render
         this.blox.renderBackground();

@@ -41,8 +41,9 @@ public class ColorManager {
 
         do {
             newIndex = getRandomIndex();
+            System.out.println(newIndex);
             newColor = this.colors.get(newIndex);
-        } while (newColor.equals(this.activeColor));
+        } while (activeColor != null && colorEquals(newColor.getGdxColor(), activeColor.getGdxColor()));
 
         this.activeColor = newColor;
     }
@@ -78,7 +79,22 @@ public class ColorManager {
     public ArrayList<GameColor> getShuffledColors() {
         ArrayList<GameColor> colorsCopy = (ArrayList<GameColor>) colors.clone();
         Collections.shuffle(colorsCopy);
+        System.out.println(colorsCopy);
         return colorsCopy;
+    }
+
+    public boolean colorEquals(Color color1, Color color2) {
+        if (color1 == null || color2 == null) {
+            return false;
+        }
+
+        return color1.r == color2.r && color1.g == color2.g && color1.b == color2.b;
+    }
+
+    public boolean isColor(Color color) {
+        final Color activeGDXColor = activeColor.getGdxColor();
+
+        return colorEquals(color, activeGDXColor);
     }
 
 }

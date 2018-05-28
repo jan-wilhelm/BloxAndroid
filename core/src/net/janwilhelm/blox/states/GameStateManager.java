@@ -14,6 +14,9 @@ public class GameStateManager {
     }
 
     public void push(State state) {
+        if (states.size() == 0) {
+            state.wasShown();
+        }
         states.push(state);
     }
 
@@ -23,6 +26,7 @@ public class GameStateManager {
 
     public void set(State state) {
         states.pop();
+        state.wasShown();
         states.push(state);
     }
 

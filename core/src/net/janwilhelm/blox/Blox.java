@@ -25,6 +25,7 @@ public class Blox extends ApplicationAdapter {
 	private ShapeRenderer shapeRenderer;
 	private FPSLogger logger;
 	public int screenWidth, screenHeight;
+	public int score = 0;
 	
 	@Override
 	public void create () {
