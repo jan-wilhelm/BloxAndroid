@@ -34,6 +34,12 @@
    <init>(com.badlogic.gdx.Application, android.content.Context, java.lang.Object, com.badlogic.gdx.backends.android.AndroidApplicationConfiguration);
 }
 
+-keep class mk.gdx.firebase.**{*;}
+-keepattributes Signature
+-keepattributes *Annotation*
+# Keep all POJO objects which you had used as Database models.
+-keepclassmembers class com.yourcompany.models.** {*;}
+
 -keepclassmembers class com.badlogic.gdx.physics.box2d.World {
    boolean contactFilter(long, long);
    void    beginContact(long);

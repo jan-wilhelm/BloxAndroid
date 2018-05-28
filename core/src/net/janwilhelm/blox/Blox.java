@@ -26,7 +26,7 @@ public class Blox extends ApplicationAdapter {
 	private FPSLogger logger;
 	public int screenWidth, screenHeight;
 	public int score = 0;
-	
+
 	@Override
 	public void create () {
 		screenWidth = Gdx.graphics.getWidth();
