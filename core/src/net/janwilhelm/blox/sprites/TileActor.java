@@ -97,7 +97,6 @@ public class TileActor extends Actor {
 
     @Override
     public void setBounds(float x, float y, float width, float height) {
-        System.out.println("Setting bounds with x " + x + " y " + y + " w " + width + " h " + height);
         super.setBounds(x, y, width, height);
     }
 }

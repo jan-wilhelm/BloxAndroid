@@ -1,6 +1,8 @@
 package net.janwilhelm.blox;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -104,6 +106,12 @@ public class Utilities {
     public static Texture createRoundedRectangle(int width, int height, int cornerRadius, Color color) {
         Corner[] allCorners = Corner.values();
         return createRoundedRectangle(allCorners, width, height, cornerRadius, color);
+    }
+
+    public static void renderBackground() {
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        final Color color = Blox.instance().getColorManager().getActiveColor().getGdxColor();
+        Gdx.gl.glClearColor(color.r, color.g, color.b, 1f); // set the background color
     }
 
 }
