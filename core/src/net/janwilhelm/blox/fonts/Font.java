@@ -1,9 +1,9 @@
 package net.janwilhelm.blox.fonts;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Font {
 
@@ -26,7 +26,7 @@ public class Font {
         this.layout.setText(this.font, text);
     }
 
-    public void render(SpriteBatch batch, float x, float y) {
+    public void render(Batch batch, float x, float y) {
         font.draw(batch, this.text, x - (layout.width) / 2, y);
     }
 
