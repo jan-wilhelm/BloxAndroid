@@ -9,6 +9,9 @@ import net.janwilhelm.blox.Utilities;
 import net.janwilhelm.blox.colors.GameColor;
 import net.janwilhelm.blox.fonts.Font;
 
+/**
+ * Class representing the white upper bar at the top of the screen
+ */
 public class UpperBarActor extends Actor {
 
     private Sprite rectangle;

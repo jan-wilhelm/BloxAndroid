@@ -39,6 +39,7 @@ public class ColorManager {
         int newIndex;
         GameColor newColor;
 
+        // Make sure we always get a new color and never the same one twice in a row
         do {
             newIndex = getRandomIndex();
             System.out.println(newIndex);
@@ -76,14 +77,23 @@ public class ColorManager {
         return colors;
     }
 
+    /**
+     * Get a shuffled copy of the colors
+     * @return A four element copy of the colors sorted randomly
+     */
     public ArrayList<GameColor> getShuffledColors() {
         ArrayList<GameColor> colorsCopy = (ArrayList<GameColor>) colors.clone();
         Collections.shuffle(colorsCopy);
-        System.out.println(colorsCopy);
         return colorsCopy;
     }
 
-    public boolean colorEquals(Color color1, Color color2) {
+    /**
+     * Check if two colors are the same solely based on their rgb values and ignoring the alpha
+     * @param color1 The first color
+     * @param color2 The other color
+     * @return True if the colors are the same, false otherwise
+     */
+    public static boolean colorEquals(Color color1, Color color2) {
         if (color1 == null || color2 == null) {
             return false;
         }
@@ -91,6 +101,11 @@ public class ColorManager {
         return color1.r == color2.r && color1.g == color2.g && color1.b == color2.b;
     }
 
+    /**
+     * Check if the current color is equal to another given color
+     * @param color The Color to check against
+     * @return true if the colors are the same, false otherwise
+     */
     public boolean isColor(Color color) {
         final Color activeGDXColor = activeColor.getGdxColor();
 

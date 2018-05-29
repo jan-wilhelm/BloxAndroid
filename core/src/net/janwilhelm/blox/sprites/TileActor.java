@@ -1,7 +1,6 @@
 package net.janwilhelm.blox.sprites;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -10,16 +9,19 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 import net.janwilhelm.blox.GameLogicHandler;
 import net.janwilhelm.blox.Utilities;
-import net.janwilhelm.blox.colors.ColorManager;
 import net.janwilhelm.blox.colors.GameColor;
 
+/**
+ * This class represents one of the four squares in the center of the screen. Each of those squares
+ * has its own color and position.
+ */
 public class TileActor extends Actor {
 
-    public Sprite texture;
-    public GameLogicHandler gameLogicHandler;
+    public Sprite texture; // The texture of the Actor which gets generated before rendering and therefore improves performance
+    public GameLogicHandler gameLogicHandler; // Callback handler which gets used when a user taps on the Actor
 
     private GameColor color;
-    private Corner[] corners;
+    private Corner[] corners; // The corners which should be rounded
     private int cornerRadius;
 
     public TileActor(Corner[] corners, int width, int height, int cornerRadius, final GameColor color) {
@@ -34,11 +36,10 @@ public class TileActor extends Actor {
         this.texture = new Sprite(Utilities.createRoundedRectangle(corners, width, height, cornerRadius, Color.WHITE));
         this.texture.setColor(color.getGdxColor());
 
-        final TileActor instance = this;
+        final TileActor instance = this; // Create a copy of the instance of the TileActor to use it in the anonymous InputListener
         addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Touch up " + color.getName());
                 event.handle();
                 if (gameLogicHandler != null) {
                     gameLogicHandler.tapped(instance);
@@ -47,6 +48,7 @@ public class TileActor extends Actor {
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                // return true in order to continue handling the event in #touchUp
                 return true;
             }
         });
@@ -76,6 +78,9 @@ public class TileActor extends Actor {
         this.setY(y);
     }
 
+    /**
+     * Always call this function after moving / resizing / transforming the Actors. Otherwise, the taps might not get passed through to the actor.
+     */
     public void refreshBounds() {
         setBounds(this.getX(), this.getY(), this.getWidth(), this.getHeight());
     }
