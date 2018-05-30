@@ -3,12 +3,12 @@ package net.janwilhelm.blox;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.FPSLogger;
-import com.badlogic.gdx.utils.Timer;
 
 import net.janwilhelm.blox.colors.ColorManager;
 import net.janwilhelm.blox.screens.GameScreen;
 import net.janwilhelm.blox.screens.MenuScreen;
 import net.janwilhelm.blox.screens.TransitionScreen;
+import net.janwilhelm.blox.screens.transition.SlideInDirection;
 import net.janwilhelm.blox.screens.transition.SlideInTransition;
 import net.janwilhelm.blox.sprites.TileActor;
 
@@ -46,19 +46,41 @@ public class Blox extends Game implements GameLogicHandler {
 		setScreen(gameScreen);
 	}
 
+	/**
+	 * Transition to the MenuScreen using a cool SlideInTransition
+	 */
 	public void goToMenu() {
-		Timer.schedule(new Timer.Task() {
+		final TransitionScreen transitionScreen = new TransitionScreen(new SlideInTransition(8f, new Runnable() {
 			@Override
 			public void run() {
-				final TransitionScreen transitionScreen = new TransitionScreen(new SlideInTransition(0.4f, new Runnable() {
-					@Override
-					public void run() {
-						setScreen(menuScreen);
-					}
-				}), menuScreen.stage, gameScreen.gameStage);
-				setScreen(transitionScreen);
+				setScreen(menuScreen);
+				goToGameScreen();
 			}
-		}, 5f);
+		}, new Runnable() {
+			@Override
+			public void run() {
+				Utilities.renderBackground();
+			}
+		}, SlideInDirection.BOTTOM_TO_TOP), menuScreen.stage, gameScreen.gameStage);
+		setScreen(transitionScreen);
+	}
+
+	/**
+	 * Transition to the MenuScreen using a cool SlideInTransition
+	 */
+	public void goToGameScreen() {
+		final TransitionScreen transitionScreen = new TransitionScreen(new SlideInTransition(8f, new Runnable() {
+			@Override
+			public void run() {
+				setScreen(gameScreen);
+			}
+		}, new Runnable() {
+			@Override
+			public void run() {
+				Utilities.renderBackground();
+			}
+		}, SlideInDirection.TOP_TO_BOTTOM), gameScreen.gameStage, menuScreen.stage);
+		setScreen(transitionScreen);
 	}
 
 	/**
