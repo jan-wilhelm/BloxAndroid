@@ -80,7 +80,8 @@ public class SlideInTransition extends Transition {
                 outStage.getCamera().position.y = Gdx.graphics.getHeight() * 3 / 2;
                 break;
             case TOP_TO_BOTTOM:
-
+                inStage.getCamera().position.y = Gdx.graphics.getHeight() * 3/ 2;
+                outStage.getCamera().position.y = Gdx.graphics.getHeight() / 2;
                 break;
             default:
                 break;
