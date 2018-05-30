@@ -50,11 +50,10 @@ public class Blox extends Game implements GameLogicHandler {
 	 * Transition to the MenuScreen using a cool SlideInTransition
 	 */
 	public void goToMenu() {
-		final TransitionScreen transitionScreen = new TransitionScreen(new SlideInTransition(8f, new Runnable() {
+		final TransitionScreen transitionScreen = new TransitionScreen(new SlideInTransition(0.5f, new Runnable() {
 			@Override
 			public void run() {
 				setScreen(menuScreen);
-				goToGameScreen();
 			}
 		}, new Runnable() {
 			@Override
@@ -69,7 +68,7 @@ public class Blox extends Game implements GameLogicHandler {
 	 * Transition to the MenuScreen using a cool SlideInTransition
 	 */
 	public void goToGameScreen() {
-		final TransitionScreen transitionScreen = new TransitionScreen(new SlideInTransition(8f, new Runnable() {
+		final TransitionScreen transitionScreen = new TransitionScreen(new SlideInTransition(0.5f, new Runnable() {
 			@Override
 			public void run() {
 				setScreen(gameScreen);
@@ -91,6 +90,8 @@ public class Blox extends Game implements GameLogicHandler {
 	public void tapped(TileActor actor) {
 		if (colorManager.isColor(actor.getColor())) {
 			this.next();
+		} else {
+			this.lost();
 		}
 	}
 
@@ -102,6 +103,11 @@ public class Blox extends Game implements GameLogicHandler {
 
 		score ++;
 		this.gameScreen.next();
+	}
+
+	public void lost() {
+		score = 0;
+		goToMenu();
 	}
 
 	/**

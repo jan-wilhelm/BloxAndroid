@@ -99,11 +99,11 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-        Blox.instance().goToMenu();
     }
 
     @Override
     public void render(float delta) {
+        System.out.println("gameScreen render");
         Utilities.renderBackground();
         gameStage.act(Gdx.graphics.getDeltaTime());
         gameStage.draw();
