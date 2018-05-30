@@ -23,12 +23,17 @@ public class SlideInTransition extends Transition {
             outStage.getCamera().position.y = Gdx.graphics.getHeight() * 3 / 2;
             outStage.getCamera().update();
 
+            inStage.act(delta);
+            outStage.act(delta);
+            inStage.draw();
+            outStage.draw();
+
             finish.run();
             return;
         }
 
         final int halfHeight = Gdx.graphics.getHeight() / 2;
-        final int x = Math.round(Gdx.graphics.getHeight() * Math.max(1 - totalDeltas / this.duration, 0));
+        final int x = Math.round(Gdx.graphics.getHeight() * Math.min(Math.max(1 - totalDeltas / this.duration, 0), 1));
 
         final int inY = x + halfHeight;
         final int outY = x - halfHeight;
